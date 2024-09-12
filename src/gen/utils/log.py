@@ -30,6 +30,8 @@ class Logger():
 
         with open('./logs/all.log', 'a') as f:
             f.write(log)
+        
+        return 1
     
     def error(this, data):
 
@@ -37,3 +39,16 @@ class Logger():
 
         with open('./logs/all.log', 'a') as f:
             f.write(log)
+        
+        return 1
+    
+    def warning(this, data):
+        if this.level != "warning" or this.level != "all":
+            return 0
+    
+        log = f"[{this._getTimeDate()}] - WARNING: {data}\n"
+
+        with open('./logs/all.log', 'a') as f:
+            f.write(log)
+        
+        return 1

@@ -3,7 +3,14 @@ class Scene():
         this.type = "sequenced"
         this.sequence = 0
 
-        this.name = "Introduction"
+        this.desc = "Introduction"
     
-    def main(this):
-        print("Running")
+    def scene(this):
+        print("First part of scene")
+
+        return 2, "fight"
+
+    def return_scene(this):
+        print("Second part of scene")
+
+        return 1

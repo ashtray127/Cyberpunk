@@ -1,44 +1,31 @@
 '''
 main.py
-    - Calls scenes
-    - Scene types:
-        - Sequenced 
-            - These are story scenes, where you progress through the sequence of them as it goes along.
-        - Extra
-            - These are scenes that can be called from other scenes, like battles
+    - Main run file
 '''
-import os
-import importlib
+import gen.utils.sceneManager as sceneManager
+import gen.utils.log as logger
 
-'''
-getScenes
-    - Gets all the scenes inside of the scenes folder
-    - Returns the list of sequenced scenes in a list and the extra scenes in a list
-'''
-def getScenes():
-    sequencedScenes = [None] * 50
-    extraScenes = {}
+FAILURE_CODE = 0
+SUCCESS_CODE = 1
+SCENE_CALL_CODE = 2
 
-    for scene in os.listdir('./scenes'):
-        if "pycache" in scene:
-            continue 
-        
-        if not scene.endswith('.py'):
-            continue 
-        
-        sceneData = importlib.import_module(f'scenes.{scene[:-3]}').Scene()
 
-        if sceneData.type == "sequenced":
-            if sequencedScenes[sceneData.sequence] is not None:
-                raise Exception("Scene Sequence is double assigned") 
-            sequencedScenes[sceneData.sequence] = sceneData
-        else:
-            extraScenes[sceneData.name] = sceneData
-    
-    return sequencedScenes, extraScenes
 
 def main():
-    sequencedScenes, extraScenes = getScenes()
+    Logger = logger.Logger()
+    SceneManager = sceneManager.SceneManager(Logger)
+
+    for scene in range(SceneManager.numSequenced):
+        exit_code, *args = SceneManager.runSequencedScene(scene)
+
+
+        if exit_code is SCENE_CALL_CODE:
+
+            SceneManager.runExtraScene(args[0])
+
+
+            SceneManager.runReturnScene(scene)
+            
 
     
 
