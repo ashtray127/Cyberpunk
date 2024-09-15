@@ -6,6 +6,7 @@ import json
 from colorama import Fore
 import datetime
 import pytz
+import gen.utils.settings as settings
 
 '''
 Logger
@@ -14,41 +15,50 @@ Logger
 '''
 class Logger():
     def __init__(this):
-        with open('./gen/data/logLevel.json', 'r') as f:
-            this.level = json.load(f)["logLevel"]
+        this.devSettings = settings.SettingsManager().getDevSettings()
     
-    # Returns the date and time
+    def _writeLogData(this, type, data):
+        return f"[{this._getTimeDate()}] - {type}: {data}\n"
+
     def _getTimeDate(this):
         current = datetime.datetime.now(pytz.timezone('America/New_York'))
         return current.strftime('%x - %X')
 
     def info(this, data):
-        if this.level != "all":
+        if this.devSettings["logLevel"] != "all":
             return 0
 
-        log = f"[{this._getTimeDate()}] - INFO: {data}\n"
+        logMessage = this._writeLogData("INFO", data)
+
+        if this.devSettings["printInfoLogs"]:
+            print(logMessage)
 
         with open('./logs/all.log', 'a') as f:
-            f.write(log)
+            f.write(logMessage)
         
         return 1
     
     def error(this, data):
+        logMessage = this._writeLogData("ERROR", data)
 
-        log = f"[{this._getTimeDate()}] - ERROR: {data}\n"
+        if this.devSettings["printErrorLogs"]:
+            print(logMessage)
 
         with open('./logs/all.log', 'a') as f:
-            f.write(log)
+            f.write(logMessage)
         
         return 1
     
     def warning(this, data):
-        if this.level != "warning" or this.level != "all":
+        if this.devSettings["logLevel"] != "warning" or this.devSettings["logLevel"] != "all":
             return 0
     
-        log = f"[{this._getTimeDate()}] - WARNING: {data}\n"
+        logMessage = this._writeLogData("WARNING", data)
+
+        if this.devSettings["printWarningLogs"]:
+            print(logMessage)
 
         with open('./logs/all.log', 'a') as f:
-            f.write(log)
+            f.write(logMessage)
         
         return 1

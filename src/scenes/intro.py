@@ -2,7 +2,6 @@ class Scene():
     def __init__(this):
         this.type = "sequenced"
         this.sequence = 0
-
         this.desc = "Introduction"
     
     def scene(this):

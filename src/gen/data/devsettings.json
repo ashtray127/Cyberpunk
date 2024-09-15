@@ -1,0 +1,6 @@
+{
+    "logLevel":"all",
+    "printWarningLogs":true,
+    "printErrorLogs":true,
+    "printInfoLogs":false
+}

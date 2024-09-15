@@ -1,0 +1,6 @@
+[09/15/24 - 16:36:34] - INFO: Running sequeunced scene 0
+[09/15/24 - 16:36:34] - INFO: Scene 0 returned with exit code 2
+[09/15/24 - 16:36:34] - INFO: Running extra scene fight
+[09/15/24 - 16:36:34] - INFO: Extra scene fight returned with code 1
+[09/15/24 - 16:36:34] - INFO: Running return scene of sequenced scene 0
+[09/15/24 - 16:36:34] - INFO: Return scene 0 returned with code 1
